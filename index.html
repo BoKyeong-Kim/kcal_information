@@ -9,6 +9,17 @@
             integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
             crossorigin="anonymous"
         />
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-175462567-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-175462567-1');
+        </script>
     </head>
     <body style="text-align: center;">
         <!-- JS, Popper.js, and jQuery -->
@@ -109,7 +120,12 @@
             integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
             crossorigin="anonymous"
         ></script>
-		<div class="fb-comments" data-href="https://bokyeong-kim.github.io/" data-numposts="5" data-width=""></div>
+        <div
+            class="fb-comments"
+            data-href="https://bokyeong-kim.github.io/"
+            data-numposts="5"
+            data-width=""
+        ></div>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
         <script type="text/javascript">
@@ -122,14 +138,25 @@
             let model, webcam, labelContainer, maxPredictions;
 
             var labeling = {
-                공기밥: { kcal: 310 , comment: "= 런닝머신 31분 하기" },
-                치킨: { kcal: 1800, comment:"= 스쿼트 267분 하기" },
-                떡볶이: { kcal: 1000 , comment :"= 등산 130분 하기" },
-                삼계탕: { kcal: 918 , comment :"= 윗몸일으키기 119분 하기"},
-                맥주: { kcal: 240, comment :"= 계단 36분 걷기" },
-                바나나 : { kcal: 88.7 , comment : "=1개 먹을때마다 37분 요가하기"},
-                김밥: { kcal: 446 , comment : "= 51분동안 수영하기"},
+                공기밥: { kcal: 310, comment: '= 런닝머신 31분 하기' },
+                치킨: { kcal: 1800, comment: '= 스쿼트 267분 하기' },
+                떡볶이: { kcal: 1000, comment: '= 등산 130분 하기' },
+                삼계탕: { kcal: 918, comment: '= 윗몸일으키기 119분 하기' },
+                맥주: { kcal: 240, comment: '= 계단 36분 걷기' },
+                바나나: { kcal: 88.7, comment: '=1개 먹을때마다 37분 요가하기' },
+                김밥: { kcal: 446, comment: '= 51분동안 수영하기' },
             };
+
+			
+            var randomtxt = ['먹어봤자 내가 아는 그맛이다'
+                                , '뚱뚱하면 굶어서라도 빼야한다.'
+                                , '인생은 살이 쪘을 때와 안쪘을 때로 나뉜다.'
+                                , '세 끼 다먹으면 살쪄요'
+                                , '처먹지를 말던가 살쪘다고 징징대지를 말던가'
+                                , '그 몸무게가 사람이냐? -강천성(짐승)']
+            
+            var randomLen = randomtxt.length;
+            var randomContent = Math.round(Math.random()*(randomLen-1));
 
             // Load the image model and setup the webcam
             async function init() {
@@ -160,7 +187,14 @@
                     const classPredictionafter = prediction[i].probability.toFixed(2);
                     if (classPredictionafter >= 0.5) {
                         labelContainer.childNodes[i].innerHTML =
-                            classlabel + ' : ' + personObj.kcal + 'kcal' + '<br>' + personObj.comment;
+                        randomtxt[randomContent]+
+							'<br>' +
+                            classlabel +
+                            ' : ' +
+                            personObj.kcal +
+                            'kcal' +
+                            '<br>' +
+                            personObj.comment;
                     }
                 }
             }
